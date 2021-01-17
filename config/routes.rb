@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'tic_tac_toe', to: 'tic_tac_toe#index'
+  root 'site#index'
 
   namespace :api do
     ['people', 'films', 'planets', 'species', 'starships', 'vehicles'].each do |entity|
@@ -8,4 +8,11 @@ Rails.application.routes.draw do
       get "#{entity}/search/:query", to: "#{entity}#search"
     end
   end
+
+  get '*page', to: 'site#index', constraints: ->(req) do
+    !req.xhr? && req.format.html?
+  end
+
+  # just for fun
+  get 'tic_tac_toe', to: 'tic_tac_toe#index'
 end

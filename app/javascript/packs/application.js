@@ -7,7 +7,21 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import React from 'react';
+import { render } from 'react-dom';
+import App from '../components/App';
+import { BrowserRouter } from 'react-router-dom';
+
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+document.addEventListener('DOMContentLoaded', () => {
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.querySelector('#root')
+  );
+});
