@@ -1,5 +1,5 @@
 class Api::PeopleController < Api::BaseController
   def resource
-    'people'
+    'People'
   end
 end

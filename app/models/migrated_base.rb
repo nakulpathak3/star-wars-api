@@ -40,6 +40,7 @@ class MigratedBase < ApplicationRecord
   end
 
   def clear_cache
-    Rails.cache.delete('#{self.class.name.downcase}-all')
+    Rails.cache.delete("#{self.class.name.downcase}-all")
+    self.class.delete_all
   end
 end
