@@ -1,4 +1,4 @@
-class Api::SpeciesController < Api::BaseController
+class Api::SpeciesController < Api::NoTableBaseController
   def resource
     'species'
   end

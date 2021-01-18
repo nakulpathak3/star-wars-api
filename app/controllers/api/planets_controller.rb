@@ -1,4 +1,4 @@
-class Api::PlanetsController < Api::BaseController
+class Api::PlanetsController < Api::NoTableBaseController
   def resource
     'planets'
   end

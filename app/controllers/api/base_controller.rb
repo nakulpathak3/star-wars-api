@@ -6,22 +6,19 @@ class Api::BaseController < ApplicationController
   end
 
   def index
-    resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/").body)
-    result = resp['results']
-    i = 2
-    while resp['next'] != nil
-      resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/?page=#{i}").body)
-      i += 1
-      result.append(resp['results'])
-    end
-    render json: result
+    render json: resource.constantize.new.all
   end
 
   def get
-    render json: JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/#{params[:id]}/").body)
+    render json: resource.constantize.new.get_by_id(params[:id])
   end
 
   def search
-    render json: JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/?search=#{params[:query]}").body)
+    render json: resource.constantize.new.search(params[:query])
+  end
+
+  def clear_cache
+    resource.constantize.new.clear_cache
+    render json: { cleared: true }
   end
 end

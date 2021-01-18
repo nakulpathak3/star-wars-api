@@ -1,4 +1,4 @@
-class Api::VehiclesController < Api::BaseController
+class Api::VehiclesController < Api::NoTableBaseController
   def resource
     'vehicles'
   end
