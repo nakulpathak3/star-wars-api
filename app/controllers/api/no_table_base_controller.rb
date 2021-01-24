@@ -8,11 +8,9 @@ class Api::NoTableBaseController < ApplicationController
   def index
     resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/").body)
     result = resp['results']
-    i = 2
     while resp['next'] != nil
-      resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/?page=#{i}").body)
-      i += 1
-      result.append(resp['results'])
+      resp = JSON.parse(Faraday.get("https://swapi.dev/api#{resp['next'].partition('/api').last}").body)
+      result.concat(resp['results'])
     end
     render json: result
   end
@@ -22,7 +20,13 @@ class Api::NoTableBaseController < ApplicationController
   end
 
   def search
-    render json: JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/?search=#{params[:query]}").body)
+    resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{resource}/?search=#{params[:query]}").body)
+    result = resp['results']
+    while resp['next'] != nil
+      resp = JSON.parse(Faraday.get("https://swapi.dev/api#{resp['next'].partition('/api').last}").body)
+      result.concat(resp['results'])
+    end
+    render json: result
   end
 
   def clear_cache
