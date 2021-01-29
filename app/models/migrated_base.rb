@@ -31,12 +31,13 @@ class MigratedBase < ApplicationRecord
   end
 
   def search(query)
-    if !Rails.cache.exist?("#{self.class.name.downcase}-all")
-      return JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/?search=#{query}").body)
-    else
-      # Todo: replace with pg_search? or just normal LIKE search on given column
-      return JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/?search=#{query}").body)
+    resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/?search=#{query}").body)
+    result = resp['results']
+    while resp['next'] != nil
+      resp = JSON.parse(Faraday.get("https://swapi.dev/api#{resp['next'].partition('/api').last}").body)
+      result.concat(resp['results'])
     end
+    result
   end
 
   def clear_cache
