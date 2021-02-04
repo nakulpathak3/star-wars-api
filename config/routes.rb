@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     ['people', 'films', 'planets', 'species', 'starships', 'vehicles'].each do |entity|
       get "#{entity}", to: "#{entity}#index"
-      get "#{entity}/search/:query", to: "#{entity}#search"
+      get "search/#{entity}/:query", to: "#{entity}#search"
       get "#{entity}/clear_cache", to: "#{entity}#clear_cache"
       get "#{entity}/:id", to: "#{entity}#get"
     end

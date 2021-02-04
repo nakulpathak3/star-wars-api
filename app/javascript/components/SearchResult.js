@@ -5,16 +5,18 @@ class SearchResult extends React.Component {
   constructor(props) {
     super(props);
     console.log(props)
+    const q_params = new URLSearchParams(this.props.location.search);
     this.state = {
       response: null,
-      url: props.match.url,
+      query: q_params.get('query'),
+      path: props.match.path,
     };
   }
 
   componentDidMount() {
-    console.log('/api' + this.state.url)
+    console.log('/api' + this.state.path + this.state.query)
     axios
-    .get('/api' + this.state.url)
+    .get('/api' + this.state.path + this.state.query)
     .then(resp => this.setState({response: resp.data}))
     .catch((error) => {
       console.log(error);
@@ -28,10 +30,14 @@ class SearchResult extends React.Component {
 
     return (
       <div>
-        <h2>{this.state.url}</h2>
+        <h2>{this.state.path.replace(/\//g, ' ')}</h2>
         <div>
-          {Object.keys(response).map(function(key) {	
-            return <div>{key}: {response[key]}</div>;	
+          {response.map(function(name,  index) {
+            return <li key={index}>
+              {Object.keys(name).map(function(key) {
+                return <div>{key}: {name[key]}</div>;
+              })}
+            </li>;
           })}
         </div>
       </div>
