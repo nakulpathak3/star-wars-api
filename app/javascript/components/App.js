@@ -4,14 +4,9 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-import People from './People';
-import Films from './Films';
-import Planets from './Planets';
-import Species from './Species';
-import Vehicles from './Vehicles';
-import Starships from './Starships';
 import SearchForm from './SearchForm';
 import All from './All';
+import Id from './Id';
 
 const App = () => (
   <HashRouter>
@@ -56,25 +51,26 @@ const App = () => (
         </ul>
       </ul>
       <div className="content">
-        <Route path="/people" component={All}/>
         <Route path="/films" component={All}/>
+        <Route path="/people" component={All}/>
         <Route path="/planets" component={All}/>
         <Route path="/species" component={All}/>
         <Route path="/vehicles" component={All}/>
         <Route path="/starships" component={All}/>
 
-        <Route path="/people/:id?" component={People}/>
-        <Route path="/people/:search?" component={People}/>
-        <Route path="/films/:id?" component={Films}/>
-        <Route path="/films/:search?" component={films}/>
-        <Route path="/planets/:id?" component={Planets}/>
-        <Route path="/planets/:search?" component={Planets}/>
-        <Route path="/species/:id?" component={Species}/>
-        <Route path="/species/:search?" component={Species}/>
-        <Route path="/vehicles/:id?" component={Vehicles}/>
-        <Route path="/vehicles/:search?" component={Vehicles}/>
-        <Route path="/starships/:id?" component={Starships}/>
-        <Route path="/starships/:search?" component={Starships}/>
+        <Route path="/films/:id" component={Id}/>
+        <Route path="/people/:id" component={Id}/>
+        <Route path="/planets/:id" component={Id}/>
+        <Route path="/species/:id" component={Id}/>
+        <Route path="/vehicles/:id" component={Id}/>
+        <Route path="/starships/:id" component={Id}/>
+
+        <Route path="/people/:search" component={People}/>
+        <Route path="/films/:search" component={Films}/>
+        <Route path="/planets/:search" component={Planets}/>
+        <Route path="/species/:search" component={Species}/>
+        <Route path="/vehicles/:search" component={Vehicles}/>
+        <Route path="/starships/:search" component={Starships}/> 
       </div>
     </div>
   </HashRouter>

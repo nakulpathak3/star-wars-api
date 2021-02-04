@@ -15,6 +15,8 @@ class SearchForm extends React.Component {
   }
 
   handleSubmit(event) {
+    if (this.state.query ==  "") return;
+    
     axios
     .get('/api/' + this.state.resource + '/search/' + this.state.query)
     .then(resp => this.setState({response: resp.data}))
