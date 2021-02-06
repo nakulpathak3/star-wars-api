@@ -1,2 +1,2 @@
-class Species < ApplicationRecord
+class Species < MigratedBase
 end

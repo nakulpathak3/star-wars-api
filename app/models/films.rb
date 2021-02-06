@@ -1,2 +1,2 @@
-class Films < ApplicationRecord
+class Films < MigratedBase
 end

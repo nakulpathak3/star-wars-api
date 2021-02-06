@@ -1,2 +1,2 @@
-class Planets < ApplicationRecord
+class Planets < MigratedBase
 end

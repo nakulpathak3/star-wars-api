@@ -1,2 +1,2 @@
-class Vehicles < ApplicationRecord
+class Vehicles < MigratedBase
 end

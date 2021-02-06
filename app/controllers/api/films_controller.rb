@@ -1,5 +1,5 @@
-class Api::FilmsController < Api::NoTableBaseController
+class Api::FilmsController < Api::BaseController
   def resource
-    'films'
+    'Films'
   end
 end

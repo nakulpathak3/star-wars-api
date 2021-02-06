@@ -7,12 +7,12 @@ class MigratedBase < ApplicationRecord
       Rails.logger.info("Not cached!")
       resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/").body)
       result = resp['results']
-      i = 2
+      self.class.insert_all(result)
       while resp['next'] != nil
-        self.class.insert_all!(result)
-        resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/?page=#{i}").body)
-        i += 1
+        puts "https://swapi.dev/api/#{resp['next'].partition('/api').last}"
+        resp = JSON.parse(Faraday.get("https://swapi.dev/api#{resp['next'].partition('/api').last}").body)
         result = resp['results']
+        self.class.insert_all(result)
       end
       Rails.cache.write("#{self.class.name.downcase}-all", true, expires_in: 6.hours)
     end

@@ -1,5 +1,5 @@
-class Api::StarshipsController < Api::NoTableBaseController
+class Api::StarshipsController < Api::BaseController
   def resource
-    'starships'
+    'Starships'
   end
 end

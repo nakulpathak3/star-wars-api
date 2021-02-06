@@ -1,2 +1,2 @@
-class Starships < ApplicationRecord
+class Starships < MigratedBase
 end
