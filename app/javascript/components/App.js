@@ -32,7 +32,7 @@ const App = () => (
         return (
           <div key={resource}>
             <Route exact path={'/'+ resource} component={All}/>
-            <Route path={'/' + resource + '/:id'} component={Id}/>
+            <Route path={'/' + resource + '/:id/'} component={Id}/>
             <Route path={'/search/' +  resource + '/'} component={SearchResult}/>
           </div>
         );

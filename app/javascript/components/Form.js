@@ -1,16 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom';
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: '',
-      query: '',
+      response: null,
+      query: null,
       resource: this.props.resource,
       searchBy: this.props.searchBy,
     };
-
+    console.log("Form constructor: Got called with " + this.state.query + this.state.searchBy + this.state.resource);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,19 +20,19 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
-    if (this.state.query ==  "") return;
-    
-    if (this.state.searchBy == 'id') {
-      console.log('/' + this.state.resource + '/' + this.state.query);
-      this.props.history.push('/' + this.state.resource + '/' + this.state.query);
+    const { query, searchBy, resource } = this.state;
+    console.log("Form Submit: Got called with " + query + searchBy + resource);
+
+    if (searchBy == 'id') {
+      this.props.history.push('/' + resource + '/' + query);
     } else {
-      console.log('/' + this.state.resource + '/' + this.state.searchBy + '?query=' + this.state.query)
-      this.props.history.push('/' + this.state.searchBy + '/' + this.state.resource  + '?query=' + this.state.query);
+      this.props.history.push('/' + searchBy + '/' + resource  + '?query=' + query);
     }
     event.preventDefault();
   }
 
   render() {
+    console.log("Form Render: Got called with " + this.state.query);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>

@@ -1,37 +1,52 @@
 import React from 'react';
 import axios from 'axios';
 
-class SearchResult extends React.Component {
+class Id extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
       response: null,
-      url: props.match.url,
     };
+    console.log("ID construct: Got called with " + this.props.match.url);
+    this.makeRequest = this.makeRequest.bind(this)
   }
 
-  componentDidMount() {
-    console.log('/api' + this.state.url)
+  makeRequest(url) {
+    console.log("Making request with " + url);
     axios
-    .get('/api' + this.state.url)
-    .then(resp => this.setState({response: resp.data}))
+    .get('/api' + url)
+    .then(resp => {
+      this.setState({response: resp.data});
+    })
     .catch((error) => {
       console.log(error);
     });
   }
 
+  componentDidMount() {
+    console.log("ID Mount: Got called with " + this.props.match.url);
+    this.makeRequest(this.props.match.url);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.match.url !== nextProps.match.url) {
+      this.makeRequest(nextProps.match.url);
+    }
+  }
+
   render() {
+    console.log("ID Render: Got called with " + this.props.match.url);
+
     const { response } = this.state;
+    const { url } = this.props.match;
     if (response === null) return null;
-    console.log(this.state)
 
     return (
       <div>
-        <h2>{this.state.url}</h2>
+        <h2>{url}</h2>
         <div>
-          {Object.keys(response).map(function(key) {	
-            return <div>{key}: {response[key]}</div>;	
+          {Object.keys(response).map(function(key) {
+            return <div>{key}: {response[key]}</div>;
           })}
         </div>
       </div>
@@ -39,4 +54,4 @@ class SearchResult extends React.Component {
   }
 }
 
-export default SearchResult;
+export default Id;
