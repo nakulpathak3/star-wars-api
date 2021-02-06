@@ -20,14 +20,15 @@ class MigratedBase < ApplicationRecord
   end
 
   def get_by_id(id)
-    if !self.class.find(id)
+    if !self.class.find_by(id: id)
+      puts "entering not part"
       record = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/#{id}/").body)
       record['id'] = id
       if !record["detail"] # not found
-        self.class.create(record)
+        self.class.create!(record)
       end
     end
-    self.class.select(self.class.column_names - ["id"]).first
+    self.class.select(self.class.column_names - ["id"]).find(id)
   end
 
   def search(query)
