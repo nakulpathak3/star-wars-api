@@ -7,12 +7,10 @@ class Id extends React.Component {
     this.state = {
       response: null,
     };
-    console.log("ID construct: Got called with " + this.props.match.url);
     this.makeRequest = this.makeRequest.bind(this)
   }
 
   makeRequest(url) {
-    console.log("Making request with " + url);
     axios
     .get('/api' + url)
     .then(resp => {
@@ -24,7 +22,6 @@ class Id extends React.Component {
   }
 
   componentDidMount() {
-    console.log("ID Mount: Got called with " + this.props.match.url);
     this.makeRequest(this.props.match.url);
   }
 
@@ -35,8 +32,6 @@ class Id extends React.Component {
   }
 
   render() {
-    console.log("ID Render: Got called with " + this.props.match.url);
-
     const { response } = this.state;
     const { url } = this.props.match;
     if (response === null) return null;

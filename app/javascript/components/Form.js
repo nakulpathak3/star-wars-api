@@ -10,7 +10,6 @@ class Form extends React.Component {
       resource: this.props.resource,
       searchBy: this.props.searchBy,
     };
-    console.log("Form constructor: Got called with " + this.state.query + this.state.searchBy + this.state.resource);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,7 +20,6 @@ class Form extends React.Component {
 
   handleSubmit(event) {
     const { query, searchBy, resource } = this.state;
-    console.log("Form Submit: Got called with " + query + searchBy + resource);
 
     if (searchBy == 'id') {
       this.props.history.push('/' + resource + '/' + query);
@@ -32,7 +30,6 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log("Form Render: Got called with " + this.state.query);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>

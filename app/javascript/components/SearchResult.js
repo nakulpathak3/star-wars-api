@@ -10,7 +10,6 @@ class SearchResult extends React.Component {
   }
 
   makeRequest(path, query) {
-    console.log("SR MakeRequest: Got called with " + path + query);
     axios
     .get('/api' + path + query)
     .then(resp => this.setState({response: resp.data}))
@@ -20,7 +19,6 @@ class SearchResult extends React.Component {
   }
 
   componentDidMount() {
-    console.log("SR Mount: Got called with " + this.props.match.path);
     const query = new URLSearchParams(this.props.location.search).get('query');
     this.makeRequest(this.props.match.path, query);
   }
@@ -33,7 +31,6 @@ class SearchResult extends React.Component {
   }
 
   render() {
-    console.log("SR Render")
     const { response } = this.state;
     if (response === null) return null;
 

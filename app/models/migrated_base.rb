@@ -2,14 +2,12 @@ class MigratedBase < ApplicationRecord
   self.abstract_class = true
 
   def all
-    Rails.logger.info("self.class is #{self.class.name.downcase}")
     if !Rails.cache.exist?("#{self.class.name.downcase}-all")
-      Rails.logger.info("Not cached!")
       resp = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/").body)
       result = resp['results']
       self.class.insert_all(result)
+
       while resp['next'] != nil
-        puts "https://swapi.dev/api/#{resp['next'].partition('/api').last}"
         resp = JSON.parse(Faraday.get("https://swapi.dev/api#{resp['next'].partition('/api').last}").body)
         result = resp['results']
         self.class.insert_all(result)
@@ -21,7 +19,6 @@ class MigratedBase < ApplicationRecord
 
   def get_by_id(id)
     if !self.class.find_by(id: id)
-      puts "entering not part"
       record = JSON.parse(Faraday.get("https://swapi.dev/api/#{self.class.name.downcase}/#{id}/").body)
       record['id'] = id
       if !record["detail"] # not found

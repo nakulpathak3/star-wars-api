@@ -12,7 +12,6 @@ class All extends React.Component {
   }
 
   componentDidMount() {
-    console.log("All: mount with " + this.state.path)
     axios
       .get('/api' + this.state.path)
       .then(resp => this.setState({ response: resp.data }))
